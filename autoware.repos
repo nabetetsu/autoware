@@ -1,4 +1,9 @@
 repositories:
+  # tilde
+  tilde:
+    type: git
+    url: https://github.com/nabetetsu/TILDE.git
+    version: stee-poc
   # core
   core/autoware_msgs:
     type: git
