@@ -27,7 +27,7 @@ repositories:
   # universe
   universe/autoware.universe:
     type: git
-    url: github.com:nabetetsu/experimental.tilde.autoware.universe.git
+    url: https://github.com/nabetetsu/experimental.tilde.autoware.universe.git
     version: main
   # tilde(mtt)
   universe/external/tilde:
