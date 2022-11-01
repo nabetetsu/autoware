@@ -27,8 +27,13 @@ repositories:
   # universe
   universe/autoware.universe:
     type: git
-    url: https://github.com/autowarefoundation/autoware.universe.git
+    url: github.com:nabetetsu/experimental.tilde.autoware.universe.git
     version: main
+  # tilde(mtt)
+  universe/external/tilde:
+    type: git
+    url: https://github.com/tier4/TILDE.git
+    version: 72eae1e183af780d8982f0c315903adc33abee38
   universe/external/tier4_ad_api_adaptor: # TODO(TIER IV): Improve design/code and transfer to AWF
     type: git
     url: https://github.com/tier4/tier4_ad_api_adaptor.git
