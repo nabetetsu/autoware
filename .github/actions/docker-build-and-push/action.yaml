@@ -41,6 +41,7 @@ runs:
           tags+=("type=schedule,pattern=latest")
           tags+=("type=schedule,pattern={{date 'YYYYMMDD'}}")
           tags+=("type=semver,pattern={{version}}")
+          tags+=("type=match,pattern=\d+.\d+")
         fi
 
         # Workaround for multiline strings
@@ -85,21 +86,14 @@ runs:
         username: ${{ github.repository_owner }}
         password: ${{ github.token }}
 
-    # For https://github.com/docker/buildx/issues/756
-    - name: Merge json files
-      run: |
-        jq -s ".[0] * .[1]" \
-          "${{ steps.meta-devel.outputs.bake-file }}" \
-          "${{ steps.meta-prebuilt.outputs.bake-file }}" \
-          > bake.json
-      shell: bash
-
     - name: Build and push
       uses: docker/bake-action@v2
       with:
-        push: ${{ github.ref_name == github.event.repository.default_branch }}
+        # Checking event_name for https://github.com/autowarefoundation/autoware/issues/2796
+        push: ${{ github.event_name == 'schedule' || github.ref_name == github.event.repository.default_branch || github.event_name == 'push'}}
         files: |
           docker/${{ inputs.bake-target }}/docker-bake.hcl
-          bake.json
+          ${{ steps.meta-devel.outputs.bake-file }}
+          ${{ steps.meta-prebuilt.outputs.bake-file }}
         set: |
           ${{ inputs.build-args }}
